@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 id="-">Тестово задание</h1>
+<p>Для запуска необходим сервер с php + mysql бд
+    Настройки поместить в файл .env в корне сайта, обязательные поля смотрите в .env.example
+    MYSQL_DATABASE - имя БД в ней автоматически создастся таблица rates при первом запросе к файлу index.php </p>
+<p><strong>index.php</strong> - пропишите его как входной файл в сервере, там роутер крутиться</p>
+<blockquote>
+    <p>Важно тут опущены многие моменты, с целью упростить, Go я не взял из-за не достаточного опыта с ним и ограничений
+        по времени</p>
+</blockquote>
+<h3 id="-cron">Запуск cron</h3>
+<p>В кроне должен вызывать <strong>index.php</strong> файл с переданным параметром <strong>cron</strong> - параметр
+    обязателен.<br>Пример смотрите в cron.sh </p>
+<h3 id="-warden">Запуск проекта с использованием Warden</h3>
+ <p><strong>**.env.warden -> переименовать в .env - это настройки для Warden</strong></p>
+<p><a href="https://docs.warden.dev/installing.html">Зайти на сайт и установить warden</a></p>
+<p>Далее в корне сайта запустить<br> <code>warden svc start &amp; warden env up</code><br>
+    После нужно зарегестрировать ssl сертификат <br> </ик><code>warden sign-certificate nbrb-rates.test</code></p>
+<p>Чтобы сайт был доступен нужно пробросить домен в своем DNS, для винды это прописать <strong>app.nbrb-rates.test в
+    hosts файле</strong><br>Подробнее <a href="https://docs.warden.dev/configuration/dns-resolver.html">тут</a></p>
+<p>После этого должно запуститься окружение и по пути <a href="https://app.nbrb-rates.test/">https://app.nbrb-rates.test/</a>
+    будет доступен сайт</p>
+
+
+<h3 id="-cron">Работа с примером</h3>
+
+Есть 3 пути:
+
+<ul>
+    <li>/currencies/all - возвращает все записи из БД</li>
+    <li>/currencies/:date - по дате возвращает, дата в формате Y-m-d, пример /currencies/2024-10-07</li>
+    <li>/load/ - заполняет БД записями за последние 5 дней, проверки я не делал на уникальность, потому если запустить несколько раз то в БД будут дубликаты, в выборку по дате попадут все записи за указанную дату</li>
+</ul>
+
+</body>
+</html>
